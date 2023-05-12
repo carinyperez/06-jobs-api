@@ -29,16 +29,23 @@ app.use(rateLimiter({
 	windowsMs: 15 * 60 * 1000,
 	max: 100,
 }))
+
 app.use(express.json());
+// app.use(express.static('frontend/build'))
 // extra packages
 
 app.get('/', function(req, res){
 	res.send('jobs api')
 })
 
+// app.get('/*', function(req, res){
+// 	res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
+// })
+
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/jobs', authenticateUser, jobsRouter)
+
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

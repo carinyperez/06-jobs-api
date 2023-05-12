@@ -25,6 +25,11 @@ const JobSchema = new mongoose.Schema({
 		type: String, 
 		default: ''
 	}, 
+	dateApplied: {
+		type: String,
+		required: [true, 'Please provide the date you applied'],
+		default: ''
+	},
 	createdBy: {
 		type: mongoose.Types.ObjectId, 
 		ref: 'User', 
