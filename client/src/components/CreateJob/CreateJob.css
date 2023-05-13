@@ -1,0 +1,27 @@
+.error {
+	color: red; 
+}
+
+.create-job-form {
+	margin:  1rem; 
+} 
+
+.create-job-form label {
+	display: block; 
+}
+
+.create-job-form input {
+	margin-bottom: 1rem; 
+}
+
+
+.create-job-form button {
+	background-color: green; 
+	color: white; 
+	border: none; 
+	border-radius: 5px; 
+	padding: 0.5rem; 
+	display: block; 
+	margin: auto; 
+}
+

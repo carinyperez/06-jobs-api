@@ -3,7 +3,9 @@ import Register from '../components/Register/Register';
 import  {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
+import CreateJob from '../components/CreateJob/CreateJob';
 import './HomePage.css';
+import JobList from '../components/JobList/JobList';
 
 const HomePage = () => {
 	let [data, setData] = useState('');
@@ -13,7 +15,7 @@ const HomePage = () => {
 
 	useEffect(() => {
 		getAllJobs()
-	}, [])
+	}, [token])
 
 	const signOut = () => {
 		localStorage.removeItem('token')
@@ -24,57 +26,46 @@ const HomePage = () => {
 		try {
 			const response = await axios.get('/api/v1/jobs', {
 				headers: {
-					'Authorization': `Bearer ${localStorage.getItem('token')}`
+					'Authorization': `Bearer ${token}`
 				}
 			})
 			setData(response.data.jobs);
 		} catch (error) {
 			setError(error.response.statusText)
+		} finally{
+			setTimeout(() => {
+				setError('')
+			}, 2000)
 		}
 	}
 
 	return (
 		<>
 		{!token && 
-		<div>
-		<Login/>
-		<Register/>
-		</div>
+		<section>
+			<Login/>
+			<Register/>
+		</section>
 		}
 		{
 			token &&
-			<div>
-		
+			<div >
 			 <section>
-			 <h1>Jobs List</h1>
-			 {data && 
-			 <table>
-				<tr>
-					<th><span>Date applied</span></th>
-					<th><span>Company</span></th>
-					<th><span>Job Title</span></th>
-					<th><span>Notes</span></th>
-					<th><span>Source</span></th>
-				</tr>
-				{data.map((job)=> {
-					return (
-				<tr>
-					<td ><span>{job.dateApplied}</span></td>
-					<td ><span>{job.company}</span></td>
-					<td><span>{job.position}</span></td>
-					<td><span>{job.notes}</span></td>
-					<td><span>{job.source}</span></td>
-				</tr>
-					)
-				})} 
-			</table>
+			{(data && data.length > 0) && 
+			<JobList data={data} getAllJobs={getAllJobs}/>
 			}
+			{data.length === 0 && <h1>No jobs to display, add a job below</h1>}
 			 </section>
+			 <div className='jobs-edit'>
+				<section >
+					<CreateJob getAllJobs={getAllJobs}/>
+				</section>
+			 </div>
 			 <section>
 				{error && <p className='error'>{error}</p>}
 			 </section>
 			 <section>
-			 <button type="button" className="logoff" onClick={signOut}>Sign out</button>
+			 <button type="button" className="signout" onClick={signOut}>Sign out</button>
 			 </section>
 			</div>
 		}
