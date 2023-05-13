@@ -32,17 +32,19 @@ app.use(rateLimiter({
 	max: 100,
 }))
 
+app.use(express.static('client/build'));
 app.use(express.json());
-app.use(express.static('client/build'))
-// extra packages
 
-app.get('/*', function(req, res){
-	res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
-})
+// extra packages
 
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/jobs', authenticateUser, jobsRouter)
+
+app.get('/*', function(req, res) {
+	res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+})
+
 
 
 app.use(notFoundMiddleware);
