@@ -4,12 +4,14 @@ const express = require('express');
 const app = express();
 const connectDB = require('./db/connect');
 const authenticateUser = require('./middleware/authentication');
+const path = require('path');
 
 // extra security packages 
 const helmet = require('helmet');
 const cors = require('cors'); 
 const xss  = require('xss-clean'); 
 const rateLimiter = require('express-rate-limit');
+
 
 
 // routers
@@ -31,16 +33,16 @@ app.use(rateLimiter({
 }))
 
 app.use(express.json());
-// app.use(express.static('frontend/build'))
+app.use(express.static('client/build'))
 // extra packages
 
 app.get('/', function(req, res){
 	res.send('jobs api')
 })
 
-// app.get('/*', function(req, res){
-// 	res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
-// })
+app.get('/*', function(req, res){
+	res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+})
 
 // routes
 app.use('/api/v1/auth', authRouter)

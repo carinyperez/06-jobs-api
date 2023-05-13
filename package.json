@@ -4,9 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server.js",
+    "server": "node server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client-install": "npm install --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +25,7 @@
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.2",
+    "path": "^0.12.7",
     "rate-limiter": "^0.2.0",
     "swagger-ui-express": "^4.1.6",
     "xss-clean": "^0.1.1",
