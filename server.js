@@ -36,10 +36,6 @@ app.use(express.json());
 app.use(express.static('client/build'))
 // extra packages
 
-app.get('/', function(req, res){
-	res.send('jobs api')
-})
-
 app.get('/*', function(req, res){
 	res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 })
