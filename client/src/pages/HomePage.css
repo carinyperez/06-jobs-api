@@ -1,0 +1,14 @@
+.error {
+	color: red; 
+}
+
+.jobs-edit {
+	display: grid; 
+	grid-template-columns: 1fr ; 
+}
+
+.signout {
+	background-color: gray;
+	border-radius: 5px; 
+	padding: 0.5rem;
+}

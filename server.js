@@ -4,12 +4,14 @@ const express = require('express');
 const app = express();
 const connectDB = require('./db/connect');
 const authenticateUser = require('./middleware/authentication');
+const path = require('path');
 
 // extra security packages 
 const helmet = require('helmet');
 const cors = require('cors'); 
 const xss  = require('xss-clean'); 
 const rateLimiter = require('express-rate-limit');
+
 
 
 // routers
@@ -29,16 +31,21 @@ app.use(rateLimiter({
 	windowsMs: 15 * 60 * 1000,
 	max: 100,
 }))
-app.use(express.json());
-// extra packages
 
-app.get('/', function(req, res){
-	res.send('jobs api')
-})
+app.use(express.static('client/build'));
+app.use(express.json());
+
+// extra packages
 
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/jobs', authenticateUser, jobsRouter)
+
+app.get('/*', function(req, res) {
+	res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+})
+
+
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

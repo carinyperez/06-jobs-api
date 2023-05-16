@@ -1,0 +1,30 @@
+.error {
+	color: red; 
+}
+
+.edit-job-form {
+	margin:  1rem; 
+} 
+
+.edit-job-form label {
+	display: block; 
+}
+
+.edit-job-form input {
+	margin-bottom: 1rem; 
+}
+
+
+.edit-job-form button {
+	background-color: green; 
+	color: white; 
+	border: none; 
+	border-radius: 5px; 
+	padding: 0.5rem; 
+	display: block; 
+	margin: auto; 
+}
+
+.notes {
+	height: 5vh; 
+}
